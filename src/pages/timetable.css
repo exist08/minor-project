@@ -1,0 +1,23 @@
+table.timetable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.timetable th,
+table.timetable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table.timetable th {
+    background-color: #226fad;
+}
+
+table.timetable td {
+    vertical-align: top;
+}
+
+table.timetable tr:nth-child(even) {
+    background-color: var(--black-bg);
+}

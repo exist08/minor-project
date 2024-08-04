@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+  @apply text-sm font-medium leading-normal tracking-normal;
+} */
+
+@font-face {
+    font-family: 'Cruyff Sans Condensed';
+    src: url(/src/assets/fonts/CruyffSansCondensed+DINArabic+SSTThai-Bold.otf);
+}
+:root{
+    --black-bg: #021526;
+    --blue-bg: #03346E;
+    --blue-ii-bg: #213547;
+    --light-blue: #6EACDA;
+    --light-yellow: #E2E2B6;
+    --din-pro-condensed-bold: 'DIN-Pro-CondBold-Numbers Condensed Bold';
+    --cruyff-sans-condensed: 'Cruyff Sans Condensed';
+    --ucl-font: 'Champions';
+    --green-absent: #06D001;
+    --red-present: #973131;
+    --hotpink-light: #EB3678;
+    --hotpink-dark: #EB3678aa;
+}
+/*********** dashboard ************/
+.my-dashboard{
+    background: var(--black-bg);
+}
