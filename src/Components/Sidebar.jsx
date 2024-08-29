@@ -12,7 +12,7 @@ const Sidebar = () => {
                 STUDY PLanner
             </div>
             <ul className="nav-links">
-                <li className={location.pathname === '/attendence' ? 'active' : ''}><Link style={{display: 'inline-block', width: '100%', height: '100%'}} to={'/attendence'}>Attendence</Link></li>
+                {/* <li className={location.pathname === '/attendence' ? 'active' : ''}><Link style={{display: 'inline-block', width: '100%', height: '100%'}} to={'/attendence'}>Attendence</Link></li> */}
                 <li className={location.pathname === '/my-grades' ? 'active' : ''}><Link style={{display: 'inline-block', width: '100%', height: '100%'}} to={'/my-grades'}>My Grades</Link></li>
                 <li className={location.pathname === '/class-schedule' ? 'active' : ''}><Link style={{display: 'inline-block', width: '100%', height: '100%'}} to={'/class-schedule'}>Class Schedule</Link></li>
                 <li className={location.pathname === '/study-material' ? 'active' : ''}><Link style={{display: 'inline-block', width: '100%', height: '100%'}} to={'/study-material'}>Study Material</Link></li>

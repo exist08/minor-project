@@ -2,7 +2,7 @@ import React from 'react'
 
 function Attendence(){
   return (
-    <section>Attendence</section>
+    <section className='section text-[100px] p-8'>UPCOMING...</section>
   )
 }
 
