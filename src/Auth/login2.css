@@ -1,0 +1,115 @@
+.login-container {
+    user-select: none;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ddd;
+    height: 100vh; 
+}
+.login-container .screen-1>h2{
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.7em;
+    letter-spacing: 1px;
+}
+.screen-1 {
+    background: #eee;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    gap: 2em;
+    min-width: 500px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.screen-1 .sgs-logo {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.screen-1 .email {
+    background: #ddd;
+    box-shadow: 0 0 2em #ddd;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    border-radius: 20px;
+    color: #444;
+}
+
+.screen-1 .password {
+    background: #ddd;
+    box-shadow: 0 0 2em #ddd;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    border-radius: 20px;
+    color: #444;
+}
+
+.screen-1 .login {
+    padding: 1em;
+    background: #ddd;
+    color: #ddd;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+}
+.screen-1 .footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: #777;
+    gap: 14em;
+    padding-bottom: 2em;
+}
+.screen-1 .footer p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.screen-1 .footer span {
+    cursor: pointer;
+}
+.login-container button.login {
+    cursor: pointer;
+    color: #444;
+    background: rgba(0, 0, 0, 0.697);
+    color: aliceblue;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+}
+.login-container button.login:active{
+    background: rgba(0, 0, 0, 0.57);
+}
+.login-container button.login:hover{
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.login-container input{
+    border: none;
+    outline: none;
+    /* background: rgba(0,0,0,0.2); */
+    background: #ddd;
+    width: 100%;    
+    padding: .5rem;
+    /* border-radius: 10px; */
+    transition: .3s;
+    border-bottom: 1px solid #444;
+    border-color: transparent;
+}
+.login-container input:hover,.login-container input:focus-visible{
+    border-color: #444;
+    transition: 0.5s;
+}  
+.screen-1 label{
+    font-weight: 500;
+}

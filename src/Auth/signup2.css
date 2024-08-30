@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+.screen-2{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ddd;
+}
+.wrapper {
+    width: 100%;
+    max-width: 430px;
+    border-radius: 6px;    
+    background: #eee;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    gap: 2em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.wrapper>h2{
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.7em;
+    letter-spacing: 1px;
+}
+
+.wrapper .sgs-logo {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper form {
+    margin-top: 10px;
+}
+
+.wrapper form .input-box {
+    height: 52px;
+    margin: 18px 0;
+}
+
+form .input-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #333;
+    border: 1.5px solid #C7BEBE;
+    border-bottom-width: 2.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: #ddd;
+}
+
+.input-box input:focus,
+.input-box input:valid {
+    border-color: #333;
+}
+
+form .policy {
+    display: flex;
+    align-items: center;
+}
+
+form h3 {
+    color: #707070;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.input-box button{
+    color: #fff;
+    letter-spacing: 1px;
+    border: none;
+    background: #4070f4;
+    cursor: pointer;
+    height: inherit;
+    width: 100%;
+    border-radius: 6px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.input-box button:hover {
+    background: #0e4bf1;
+}
+
+form .text h3 {
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+form .text h3 a {
+    color: #4070f4;
+    text-decoration: none;
+}
+
+form .text h3 a:hover {
+    text-decoration: underline;
+}

@@ -26,21 +26,36 @@ section.schedule-section {
 .tabs {
     display: flex;
     gap: 0px;
+    height: 10%;
 }
 
 .cards {
     background: rgba(0, 0, 0, 0.2);
+    height: 90%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     /* margin-top: 20px; */
 }
 
-.card {
+.marks-card {
     padding: 20px;
     border: 1px solid #ddd;
+    aspect-ratio: 1;
     border-radius: 5px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem 0;
+}
+.marks-card>div>.radial-progress{
+    transform: rotate(180deg);
+    .gained-marks{
+        transform: rotate(180deg);
+        font-weight: bold;
+    }
 }
 
 .tabs button {

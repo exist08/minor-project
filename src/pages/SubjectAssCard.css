@@ -1,0 +1,12 @@
+.subject-ass-card{
+    width: 200px;
+    aspect-ratio: 1;
+    background: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    overflow: hidden;
+}
+.subject-ass-card .top-heads{
+    height: 40%;
+    background: rgb(43, 102, 138);
+    padding: .5rem;
+}

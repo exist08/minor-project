@@ -111,7 +111,7 @@ function Schedule() {
               );
 
               return (
-                <td key={day} rowSpan={rowSpan}>
+                <td key={day} rowSpan={rowSpan} style={{ verticalAlign: 'middle' }}> 
                   <strong>{subject?.subject}</strong><br />
                   {subject?.teacher}<br />
                   {subject?.room}

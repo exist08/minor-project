@@ -1,8 +1,11 @@
 import React from 'react'
+import SubjectAssCards from './SubjectAssCards'
 
 function Assignments() {
   return (
-    <div>Assignments</div>
+    <section className='section p-8'>
+      <SubjectAssCards />
+    </section>
   )
 }
 

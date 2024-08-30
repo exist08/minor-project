@@ -1,11 +1,13 @@
 .logo{
     font-family: 'Cruyff Sans Condensed';
-    background: rebeccapurple;
-    font-style: italic;
+    background: #F9D689;
+    color: black;
+    text-shadow: 2px 2px 2px #E0A75E;
 }
 .nav-links{
     list-style: none;
     padding-left: 3rem;
+    margin-top: 2rem;
 }
 
 aside > ul > li{
@@ -16,9 +18,8 @@ aside > ul > li{
     text-transform: uppercase;
     letter-spacing: 0px;
     transition: .5s;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     margin-top: 1rem;
-    font-size: 2rem;
     font-family: Champions;
     text-align: left;
     padding: 0 .75rem .5rem 2rem;
@@ -29,9 +30,19 @@ aside > ul > li:hover{
     cursor: pointer;
     letter-spacing: 2px;
 }
+@media screen and (max-width: 1080px) {
+    aside > ul > li:hover{
+        background: #21354770;
+        box-shadow: 0 0 50px 0px #213547;
+        cursor: pointer;
+        letter-spacing: 0px;
+    }
+}
 aside > ul > li.active{
-    background: var(--blue-ii-bg);
+    /* background: var(--blue-ii-bg); */
+    background: #ddd;
     position: relative;
+    color: #000000;
 }
 /* aside > ul > li.active::before{
     position: absolute;
@@ -55,7 +66,9 @@ aside > button{
     bottom: 0;
     padding: 1rem;
     color: whitesmoke;
-    background: var(--hotpink-light);
+    /* background: var(--hotpink-light); */
+    background: #F9D689;
+    color: #000000;
     font-family: var(--cruyff-sans-condensed);
     border: none;
     outline: none;
@@ -81,7 +94,8 @@ aside > button:hover{
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: var(--blue-ii-bg);
+    /* background: var(--blue-ii-bg); */
+    background: #ddd;
     color: whitesmoke;
     position: sticky;
     top: 0;

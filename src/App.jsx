@@ -8,8 +8,9 @@ import Assignments from './pages/Assignments'
 import Schedule from './pages/Schedule'
 import StudyMaterial from './pages/StudyMaterial'
 import { useState } from 'react'
-import Login from './Auth/Login'
 import SignUp from './Auth/SignUp'
+import Login2 from './Auth/Login2'
+import SignUp2 from './Auth/SignUp2'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,8 +36,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login2 setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/signup" element={<SignUp2 />} />
 
         {/* Private Routes */}
         <Route
