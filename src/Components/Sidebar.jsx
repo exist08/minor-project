@@ -20,7 +20,7 @@ const Sidebar = () => {
                 <li className={location.pathname === '/study-material' ? 'active' : ''}><Link style={{ display: 'inline-block', width: '100%', height: '100%' }} to={'/study-material'}>Study Material</Link></li>
                 <li className={location.pathname === '/assignments' ? 'active' : ''}><Link style={{ display: 'inline-block', width: '100%', height: '100%' }} to={'/assignments'}>Assignments</Link></li>
             </ul>
-            <button>logout &rArr;</button>
+            <button> <Link to={'/login'}>logout &rArr;</Link></button>
         </aside>
     );
 };
