@@ -1,0 +1,14 @@
+.accounts-manager-container{
+    display: flex;
+
+}
+.accounts-manager-container>*{
+    width: 100%;
+}
+
+.title-n-btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}

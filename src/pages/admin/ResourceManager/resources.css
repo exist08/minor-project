@@ -1,0 +1,19 @@
+.list-container{
+    height: 100%;
+    /* outline: 2px solid red; */
+}
+.list-wrapper{
+    height: 85%;
+    /* outline: 2px solid lime; */
+}
+.list-wrapper-container{
+    height: 100%;
+}
+
+
+
+.tabs-n-adders{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
