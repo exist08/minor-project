@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './components.css'
 import '../index.css'
 
-function Sidebar({ role, onLogout }) {
+function Sidebar({ role = "", onLogout = ()=>{} }) {
   const location = useLocation();
 
   return (

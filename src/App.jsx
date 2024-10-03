@@ -21,13 +21,13 @@ import AccountsManager from './pages/admin/AccountManager/AccountsManager';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('student'); // Role: 'student', 'teacher', 'admin'
+  const [user, setUser] = useState({})
 
   // Simulate fetching authentication status and role from local storage or API
   useEffect(() => {
     const token = localStorage.getItem('authToken');
-    const userRole = localStorage.getItem('role'); // assuming role is saved in local storage
     setIsAuthenticated(!!token);
-    setRole(userRole); // set the role of the logged-in user
+    setRole(localStorage.getItem('role')); // set the role of the logged-in user
   }, []);
 
   // Handle logout
@@ -48,7 +48,7 @@ function App() {
       <Routes>
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login2 setIsAuthenticated={setIsAuthenticated} />}
+          element={isAuthenticated ? <Navigate to="/" /> : <Login2 setIsAuthenticated={setIsAuthenticated} user={user} setUser={setUser}/>}
         />
         <Route
           path="/signup"

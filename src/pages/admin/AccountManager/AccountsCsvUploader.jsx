@@ -2,21 +2,18 @@ import React, { useState } from 'react';
 import Papa from 'papaparse';
 import axios from 'axios';
 
-function CSVUploader({ closeModal, selectedTab }) {
+function AccountsCsvUploader({ closeModal, selectedTab }) {
     const [csvFile, setCsvFile] = useState(null);
     const [error, setError] = useState('');
 
     // Sample CSV format data for each tab
     const csvSamples = {
         Teachers: [
-            { facultyName: 'Megha Rathore', facultyAbbreviation: 'MR', username: 'teacher101' }
+            { username: 'teacher1234', password: 'teacher@sgsits', role: 'teacher' }
         ],
-        Rooms: [
-            { roomName: 'Room 101' }
+        Students: [
+            { username: '0801ca231021', password: 'student@sgsits', role: 'student'}
         ],
-        Subjects: [
-            { subjectCode: 'CT20002', subjectName: 'Information Security', subjectAbbreviation: 'IS' }
-        ]
     };
 
     // Function to download the sample CSV
@@ -47,7 +44,7 @@ function CSVUploader({ closeModal, selectedTab }) {
             header: true,
             complete: (result) => {
                 const data = result.data;
-                axios.post(`http://localhost:5000/api/${selectedTab.toLowerCase()}/bulk`, data)
+                axios.post(`http://localhost:5000//api/users/accounts/create-bulk-users`, data)
                     .then(() => {
                         closeModal(); // Close modal on successful upload
                     })
@@ -88,4 +85,4 @@ function CSVUploader({ closeModal, selectedTab }) {
     );
 }
 
-export default CSVUploader;
+export default AccountsCsvUploader;
