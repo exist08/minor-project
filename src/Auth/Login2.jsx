@@ -19,7 +19,7 @@ const Login2 = ({ setIsAuthenticated }) => {
     const handleLogin = () => {
         // loginCall({
         //     data: {
-        //         enrollmentNumber,
+        //         username,
         //         password,
         //     },
         // });
@@ -28,9 +28,18 @@ const Login2 = ({ setIsAuthenticated }) => {
     };
 
     useEffect(() => {
-        if (data && data.message) {
+        if (data) {
             alert('Login successful');
+            if (data.role === 'teacher') {
+                // Handle teacher-specific logic
+                setUser(data);
+            } else if (data.role === 'student') {
+                // Handle student-specific logic
+                setUser(data);
+            }
             // You can redirect the user or store the session here
+        } else if(error) {
+            console.log(error)
         }
     }, [data]);
 
@@ -47,6 +56,7 @@ const Login2 = ({ setIsAuthenticated }) => {
                         type="text"
                         placeholder="Ex: 0801CA231XXX"
                         value={enrollmentNumber}
+                        required
                         onChange={(e) => setEnrollmentNumber(e.target.value)}
                     />
                     </div>
@@ -58,6 +68,7 @@ const Login2 = ({ setIsAuthenticated }) => {
                             type="password"
                             placeholder="Enter password here..."
                             value={password}
+                            required
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>

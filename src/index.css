@@ -28,3 +28,19 @@
 .my-dashboard{
     background: var(--black-bg);
 }
+
+
+
+.d-red{
+    outline: 2px solid orangered;
+}
+.d-pink{
+    outline: 2px solid hotpink;
+}
+
+.d-crimson{
+    outline: 2px solid crimson;
+}
+.d-lime{
+    outline: 2px solid lime;
+}

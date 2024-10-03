@@ -2,8 +2,9 @@ import React from 'react'
 import './timetable.css'
 import './pages.css'
 
-// todo: ask chatgpt to add background color to the current day and background color to the current 
+// todo: add background color to the current day and background color to the current 
 // subject according to the slot start
+
 
 function Schedule() {
   const timetableData = {
@@ -16,7 +17,7 @@ function Schedule() {
     ],
     Tuesday: [
       { subject: 'CT20482 LAB III', teacher: 'A1 PS, SG', room: 'Lab207', start: '09:00', end: '11:00' },
-      { subject: 'CT20004 IWT LAB A2', teacher: 'US', room: 'Lab111', start: '09:00', end: '10:00' },
+      // { subject: 'CT20004 IWT LAB A2', teacher: 'US', room: 'Lab111', start: '09:00', end: '10:00' },
       { subject: 'CT20201 BDA', teacher: 'PG', room: 'Room206', start: '11:00', end: '12:00' },
       { subject: 'CT20302 AI', teacher: 'Mr. Anup', start: '12:00', end: '13:00' },
       { subject: 'LUNCH', start: '13:00', end: '14:00' },
@@ -47,7 +48,254 @@ function Schedule() {
       { subject: 'Library', start: '14:00', end: '17:00' },
     ],
   };
-  
+
+  const timeTableData = {
+    "Monday": [
+      {
+        "start": "09:00",
+        "end": "11:00",
+        "subject": "CT20302 AI",
+        "teacher": "KS",
+        "room": "Room206"
+      },
+      { subject: 'LUNCH', start: '13:00', end: '14:00' },
+      {
+        "start": "11:00",
+        "end": "12:00",
+        "subject": "CT20002 ML",
+        "teacher": "MR",
+        "room": "Room207"
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "subject": "CT20302 AI",
+        "teacher": "MR",
+        "room": "Room207"
+      },
+      {
+        "start": "14:00",
+        "end": "15:00",
+        "subject": "CT20302 AI",
+        "teacher": "Mr. Anup",
+        "room": "Room207"
+      },
+      {
+        "start": "15:00",
+        "end": "16:00",
+        "subject": "CT20004 IWT",
+        "teacher": "KS",
+        "room": "Room208"
+      },
+      {
+        "start": "16:00",
+        "end": "17:00",
+        "subject": "CT20302 AI",
+        "teacher": "MK",
+        "room": "Room208"
+      }
+    ],
+    "Tuesday": [
+      {
+        "start": "09:00",
+        "end": "11:00",
+        "subject": "CT20002 IS",
+        "teacher": "MK",
+        "room": "Room208"
+      },
+      { subject: 'LUNCH', start: '13:00', end: '14:00' },
+      {
+        "start": "11:00",
+        "end": "12:00",
+        "subject": "CT20302 AI",
+        "teacher": "MR",
+        "room": "Room208"
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "subject": "CT20002 ML",
+        "teacher": "Mr. Anup",
+        "room": "Room207"
+      },
+      {
+        "start": "14:00",
+        "end": "15:00",
+        "subject": "CT20004 IWT",
+        "teacher": "KS",
+        "room": "Room207"
+      },
+      {
+        "start": "15:00",
+        "end": "16:00",
+        "subject": "CT20002 ML",
+        "teacher": "KS",
+        "room": "Room207"
+      },
+      {
+        "start": "16:00",
+        "end": "17:00",
+        "subject": "CT20302 AI",
+        "teacher": "KS",
+        "room": "Room207"
+      }
+    ],
+    "Wednesday": [
+      {
+        "start": "09:00",
+        "end": "10:00",
+        "subject": "CT20002 IS",
+        "teacher": "MK",
+        "room": "Room206"
+      },
+      { subject: 'LUNCH', start: '13:00', end: '14:00' },
+      {
+        "start": "10:00",
+        "end": "11:00",
+        "subject": "CT20004 IWT",
+        "teacher": "MR",
+        "room": "Room207"
+      },
+      {
+        "start": "11:00",
+        "end": "12:00",
+        "subject": "CT20004 IWT",
+        "teacher": "MR",
+        "room": "Room209"
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "teacher": "KS",
+        "room": "Room208"
+      },
+      {
+        "start": "14:00",
+        "end": "15:00",
+        "subject": "CT20302 AI",
+        "teacher": "Mr. Anup",
+        "room": "Room208"
+      },
+      {
+        "start": "15:00",
+        "end": "16:00",
+        "subject": "CT20302 AI",
+        "teacher": "KS",
+        "room": "Room209"
+      },
+      {
+        "start": "16:00",
+        "end": "17:00",
+        "subject": "CT20004 IWT",
+        "teacher": "Mr. Anup",
+        "room": "Room208"
+      }
+    ],
+    "Thursday": [
+      {
+        "start": "09:00",
+        "end": "10:00",
+        "subject": "CT20302 AI",
+        "teacher": "KS",
+        "room": "Room209"
+      },
+      { subject: 'LUNCH', start: '13:00', end: '14:00' },
+      {
+        "start": "10:00",
+        "end": "11:00",
+        "subject": "CT20004 IWT",
+        "teacher": "Mr. Anup",
+        "room": "Room208"
+      },
+      {
+        "start": "11:00",
+        "end": "13:00",
+        "room": "Room208",
+        "teacher": "Ms. Pooja",
+        "subject": "CT20002 BDA"
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "subject": "CT20002 ML",
+        "teacher": "KS",
+        "room": "Room208"
+      },
+      {
+        "start": "14:00",
+        "end": "15:00",
+        "room": "Room207",
+        "teacher": "MK",
+        "subject": "CT20302 AI"
+      },
+      {
+        "start": "15:00",
+        "end": "16:00",
+        "teacher": "KS",
+        "room": "Room207"
+      },
+      {
+        "start": "16:00",
+        "end": "17:00",
+        "room": "Room207",
+        "teacher": "MK",
+        "subject": "CT20004 IWT"
+      }
+    ],
+    "Friday": [
+      {
+        "start": "09:00",
+        "end": "10:00",
+        "subject": "CT20302 AI",
+        "teacher": "Mr. Anup",
+        "room": "Room207"
+      },
+      { subject: 'LUNCH', start: '13:00', end: '14:00' },
+      {
+        "start": "10:00",
+        "end": "11:00",
+        "room": "Room207",
+        "subject": "CT20302 AI",
+        "teacher": "KS"
+      },
+      {
+        "start": "11:00",
+        "end": "12:00",
+        "subject": "CT20002 IS",
+        "teacher": "KS",
+        "room": "Room209"
+      },
+      {
+        "start": "12:00",
+        "end": "13:00",
+        "subject": "CT20302 AI",
+        "teacher": "MR",
+        "room": "Room207"
+      },
+      {
+        "start": "14:00",
+        "end": "15:00",
+        "subject": "CT20302 AI",
+        "teacher": "MR",
+        "room": "Room207"
+      },
+      {
+        "start": "15:00",
+        "end": "16:00",
+        "subject": "CT20004 IWT",
+        "teacher": "KS",
+        "room": "Room208"
+      },
+      {
+        "start": "16:00",
+        "end": "17:00",
+        "subject": "CT20002 ML",
+        "teacher": "MR",
+        "room": "Room206"
+      }
+    ]
+  }
+
 
   const timeSlots = Array.from(
     new Set(
@@ -81,46 +329,46 @@ function Schedule() {
           </tr>
         </thead>
         <tbody>
-        {timeSlots.map((slot, index) => (
-          <tr key={index}>
-            <td>{slot}</td>
-            {Object.entries(timetableData).map(([day, subjects]) => {
-              console.log(day, slot)
-              // Check if this time slot is already occupied
-              if (occupiedSlots[`${day}-${slot}`]) {
-                console.log('Occupied slot > ', day , slot)
-                return null; // Skip rendering this cell
-              }
-
-              const subject = subjects.find((s) => s.start === slot);
-              if (!subject) return <td key={day}></td>;
-              
-              const rowSpan = getRowSpan(subject);
-              if (rowSpan > 1) {
-                // Mark the time slots this row span covers as occupied
-                for (let i = 0; i < rowSpan; i++) {
-                  const nextSlot = parseInt(slot.split(':')[0], 10) + i;
-                  occupiedSlots[`${day}-${String(nextSlot).padStart(2, '0')}:00`] = true;
+          {timeSlots.map((slot, index) => (
+            <tr key={index}>
+              <td>{slot}</td>
+              {Object.entries(timetableData).map(([day, subjects]) => {
+                console.log(day, slot)
+                // Check if this time slot is already occupied
+                if (occupiedSlots[`${day}-${slot}`]) {
+                  console.log('Occupied slot > ', day, slot)
+                  return null; // Skip rendering this cell
                 }
-              }
 
-              if(subject.start === '13:00') return (
-                <td key={day} rowSpan={rowSpan}>
-                  <strong>LUNCH</strong>
-                </td>
-              );
+                const subject = subjects.find((s) => s.start === slot);
+                if (!subject) return <td key={day}></td>;
 
-              return (
-                <td key={day} rowSpan={rowSpan} style={{ verticalAlign: 'middle' }}> 
-                  <strong>{subject?.subject}</strong><br />
-                  {subject?.teacher}<br />
-                  {subject?.room}
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
+                const rowSpan = getRowSpan(subject);
+                if (rowSpan > 1) {
+                  // Mark the time slots this row span covers as occupied
+                  for (let i = 0; i < rowSpan; i++) {
+                    const nextSlot = parseInt(slot.split(':')[0], 10) + i;
+                    occupiedSlots[`${day}-${String(nextSlot).padStart(2, '0')}:00`] = true;
+                  }
+                }
+
+                if (subject.start === '13:00') return (
+                  <td key={day} rowSpan={rowSpan}>
+                    <strong>LUNCH</strong>
+                  </td>
+                );
+
+                return (
+                  <td key={day} rowSpan={rowSpan} style={{ verticalAlign: 'middle' }}>
+                    <strong>{subject?.subject}</strong><br />
+                    {subject?.teacher}<br />
+                    {subject?.room}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </section>
   )
