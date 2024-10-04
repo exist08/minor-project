@@ -1,5 +1,6 @@
 import useAxios from 'axios-hooks';
 import React, { useState } from 'react'
+import AccountsCsvUploader from './AccountsCsvUploader';
 
 function StudentsAcc() {
   const [showModal, setShowModal] = useState(false);
@@ -8,7 +9,7 @@ function StudentsAcc() {
   const [form, setForm] = useState({
     username: '',
     password: '',
-    role: 'teacher',
+    role: 'student',
   });
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -50,7 +51,7 @@ function StudentsAcc() {
     e.preventDefault();
     executeCreateUser({ data: form })
       .then(() => {
-        alert('Teacher added successfully');
+        alert('Student added successfully');
         setShowModal(false); // Close modal after class is created
         refetchUsers(); // Fetch updated class list after creation
       })

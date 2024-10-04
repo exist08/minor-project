@@ -22,12 +22,16 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('student'); // Role: 'student', 'teacher', 'admin'
   const [user, setUser] = useState({})
+  const [userId, setUserId] = useState('')
+  const [classId, setClassId] = useState('')
 
   // Simulate fetching authentication status and role from local storage or API
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     setIsAuthenticated(!!token);
     setRole(localStorage.getItem('role')); // set the role of the logged-in user
+    setClassId(localStorage.getItem('classId'));
+    setUserId(localStorage.getItem('userId'));
   }, []);
 
   // Handle logout
@@ -48,7 +52,7 @@ function App() {
       <Routes>
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login2 setIsAuthenticated={setIsAuthenticated} user={user} setUser={setUser}/>}
+          element={isAuthenticated ? <Navigate to="/" /> : <Login2 setIsAuthenticated={setIsAuthenticated} user={user} setUser={setUser} />}
         />
         <Route
           path="/signup"
@@ -64,23 +68,23 @@ function App() {
                 <Sidebar role={role} onLogout={handleLogout} />
                 <Mainbar>
                   <Routes>
-                    {/* <Route path="/" element={<Home />} /> */}
-                    <Route path="/" element={<AccountsManager />} />
+                    <Route path="/" element={<Home userRole={role} />} />
+                    {/* <Route path="/" element={<AccountsManager />} /> */}
                     {/* Role-Based Routes */}
                     {role === 'student' && (
                       <>
                         <Route path="/my-grades" element={<MyGrades />} />
-                        <Route path="/class-schedule" element={<Schedule />} />
+                        <Route path="/class-schedule" element={<Schedule userId={userId} classId={classId} />} />
                         <Route path="/study-material" element={<StudyMaterial />} />
                         <Route path="/assignments" element={<Assignments />} />
-                        {/*  <Route path="/announcements" element={<Announcements />} /> */}
+                        <Route path="/announcements" element={<Announcements role={role} />} />
                       </>
                     )}
                     {role === 'teacher' && (
                       <>
                         {/*   <Route path="/upload-grades" element={<UploadGrades />} /> */}
                         {/*  <Route path="/upload-study-material" element={<UploadStudyMaterial />} /> */}
-                        {/*  <Route path="/announcements" element={<Announcements />} /> */}
+                        <Route path="/announcements" element={<Announcements role={role} />} />
                         {/*  <Route path="/assignments" element={<Assignments />} /> */}
                       </>
                     )}
@@ -88,7 +92,7 @@ function App() {
                       <>
                         <Route path="/classes-manager" element={<ClassesManager />} />
                         <Route path="/resource-manager" element={<ResourceManager />} />
-                        <Route path="/announcements" element={<Announcements />} />
+                        <Route path="/announcements" element={<Announcements role={role} />} />
                         <Route path="/accounts-manager" element={<AccountsManager />} />
                       </>
                     )}

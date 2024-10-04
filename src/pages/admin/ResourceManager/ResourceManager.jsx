@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import ListRenderer from './ListRenderer'; // Importing the ListRenderer component
 import './resources.css'
 import CSVUploader from './CSVUploader';
+import SingleResourceUploader from './SingleResourceUploader';
 
 function ResourceManager() {
-    const [selectedTab, setSelectedTab] = useState('Rooms');
+    const [selectedTab, setSelectedTab] = useState('Teachers');
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [showCSVModal, setShowCSVModal] = useState(false);
@@ -76,6 +77,10 @@ function ResourceManager() {
 
                 {showCSVModal && (
                     <CSVUploader closeModal={() => setShowCSVModal(false)} selectedTab={selectedTab} />
+                )}
+
+                {showModal && (
+                    <SingleResourceUploader closeModal={() => setShowModal(false)} selectedTab={selectedTab} />
                 )}
             </div>
         </section>

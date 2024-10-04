@@ -41,7 +41,7 @@ section.schedule-section {
 .marks-card {
     padding: 20px;
     border: 1px solid #ddd;
-    aspect-ratio: 1;
+    aspect-ratio: 3/4;
     border-radius: 5px;
     text-align: center;
     display: flex;

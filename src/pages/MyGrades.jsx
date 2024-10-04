@@ -5,26 +5,27 @@ function MyGrades() {
 
   const examData = {
     MST_I: [
-      { subject: 'Math', marks: 16, maxMarks: 20 },
-      { subject: 'English', marks: 18, maxMarks: 20 },
-      { subject: 'Science', marks: 20, maxMarks: 20 },
-      { subject: 'History', marks: 17, maxMarks: 20 },
-      { subject: 'Geography', marks: 15, maxMarks: 20 },
+      { subject: 'Cloud Computing', marks: 16, maxMarks: 20 },
+      { subject: 'Big Data Analytics', marks: 18, maxMarks: 20 },
+      { subject: 'Internet and Web Technology', marks: 20, maxMarks: 20 },
+      { subject: 'Analysis and Design of Algorithms', marks: 17, maxMarks: 20 },
+      { subject: 'Information Security', marks: 15, maxMarks: 20 },
     ],
     MST_II: [
-      { subject: 'Math', marks: 18, maxMarks: 20 },
-      { subject: 'English', marks: 16, maxMarks: 20 },
-      { subject: 'Science', marks: 19, maxMarks: 20 },
-      { subject: 'History', marks: 18, maxMarks: 20 },
-      { subject: 'Geography', marks: 17, maxMarks: 20 },
+      { subject: 'Cloud Computing', marks: 18, maxMarks: 20 },
+      { subject: 'Big Data Analytics', marks: 16, maxMarks: 20 },
+      { subject: 'Internet and Web Technology', marks: 19, maxMarks: 20 },
+      { subject: 'Analysis and Design of Algorithms', marks: 18, maxMarks: 20 },
+      { subject: 'Information Security', marks: 17, maxMarks: 20 },
     ],
-    FINAL: [
-      { subject: 'Math', marks: 64, maxMarks: 70 },
-      { subject: 'English', marks: 69, maxMarks: 70 },
-      { subject: 'Science', marks: 68, maxMarks: 70 },
-      { subject: 'History', marks: 57, maxMarks: 70 },
-      { subject: 'Geography', marks: 63, maxMarks: 70 },
+    FINAL: [  
+      { subject: 'Cloud Computing', marks: 64, maxMarks: 70 },
+      { subject: 'Big Data Analytics', marks: 69, maxMarks: 70 },
+      { subject: 'Internet and Web Technology', marks: 68, maxMarks: 70 },
+      { subject: 'Analysis and Design of Algorithms', marks: 57, maxMarks: 70 },
+      { subject: 'Information Security', marks: 63, maxMarks: 70 },
     ],
+    
   };
 
   return (

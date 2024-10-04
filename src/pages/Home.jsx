@@ -1,8 +1,16 @@
 import React from 'react'
 
-function Home() {
+function Home({ userRole }) {
+  const roleMessages = {
+    student: "Your learning journey continues here",
+    teacher: "Empower your teaching journey",
+    admin: "Manage your institution effectively"
+  };
+  
   return (
-    <section>Home</section>
+    <section className='section p-8'>
+      <h2>{roleMessages[userRole]}</h2>
+    </section>
   )
 }
 

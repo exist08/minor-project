@@ -3,11 +3,15 @@ import useAxios from 'axios-hooks';
 import './admin.css';
 import ScheduleMaker from './ScheduleMaker';
 import ClassManager from './ClassManager/ClassManager';
+import StudentsCSVUploader from './ClassManager/StudentsCSVUploader';
+import StudentListModal from './ClassManager/StudentListModal';
 
 function ClassesManager() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [scheduleModal, setScheduleModal] = useState(false)
     const [selectedClass, setSelectedClass] = useState(null);
+    const [studentModal, setStudentModal] = useState(false)
+    const [studentListModal, setStudentListModal] = useState(false)
     const [message, setMessage] = useState('');
     const [form, setForm] = useState({
         className: '',
@@ -72,6 +76,17 @@ function ClassesManager() {
         setScheduleModal(true);      // Open the ScheduleMaker modal
     };
 
+    // Handle selecting a class and opening the Students list modal
+    const handleShowStudents = (classItem) =>{
+        setSelectedClass(classItem); // Set the selected class
+        setStudentListModal(true);      // Open the Students list modal
+    }
+
+    const handleUploadStudents = (classItem) => {
+        setSelectedClass(classItem); // Set the selected class
+        setStudentModal(true);      // Open the StudentsCSVUploader modal
+    }
+
     // handleDelete now accepts the class object and uses its id to delete
     const handleDelete = async (classItem) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete the class "${classItem.className}"?`);
@@ -115,6 +130,11 @@ function ClassesManager() {
                                             <li>
                                                 <a onClick={() => handleUploadStudents(classItem)}>
                                                     Upload Students
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onClick={() => handleShowStudents(classItem)}>
+                                                    Students List
                                                 </a>
                                             </li>
                                             <li>
@@ -192,9 +212,12 @@ function ClassesManager() {
 
             {scheduleModal && <ScheduleMaker closeScheduleMaker={() => setScheduleModal(false)} selectedClass={selectedClass} />}
 
-            {selectedClass && (
+            {studentModal && <StudentsCSVUploader closeStudent={() => setStudentModal(false)} selectedClass={selectedClass} selectedTab={'Student'} />}
+
+            {studentListModal && <StudentListModal closeStudentList={() => setStudentListModal(false)} classId={selectedClass?._id} /> }
+            {/* {selectedClass && (
                 <ClassManager selectedClass={selectedClass} /> // Render ClassManager with selected class
-            )}
+            )} */}
         </section>
     );
 }

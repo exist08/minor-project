@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import combineScheduleEntries from '../../Utils/ScheduleCombiner';
 import useAxios from 'axios-hooks';
+import axios from 'axios';
 
-const ScheduleMaker = ({closeScheduleMaker, selectedClass}) => {
+const ScheduleMaker = ({ closeScheduleMaker = () => { }, selectedClass = {} }) => {
     // Initial schedule state
     const [scheduleData, setScheduleData] = useState({
-        Monday: [],
-        Tuesday: [],
-        Wednesday: [],
-        Thursday: [],
-        Friday: [],
+        Monday: [
+            { subject: 'LUNCH', start: '13:00', end: '14:00' },],
+        Tuesday: [
+            { subject: 'LUNCH', start: '13:00', end: '14:00' },],
+        Wednesday: [
+            { subject: 'LUNCH', start: '13:00', end: '14:00' },],
+        Thursday: [
+            { subject: 'LUNCH', start: '13:00', end: '14:00' },],
+        Friday: [
+            { subject: 'LUNCH', start: '13:00', end: '14:00' },],
     });
 
     // Active day for the tab
@@ -19,6 +25,9 @@ const ScheduleMaker = ({closeScheduleMaker, selectedClass}) => {
     const [{ data: subjectsData, loading: loadingSubjects }] = useAxios('http://localhost:5000/api/subjects');
     const [{ data: teachersData, loading: loadingTeachers }] = useAxios('http://localhost:5000/api/teachers');
     const [{ data: roomsData, loading: loadingRooms }] = useAxios('http://localhost:5000/api/rooms');
+    const [{ data: schedulesData, loading: loadingSchedules }] = useAxios(`http://localhost:5000/api/class/${selectedClass?._id}/schedule`)
+
+
 
     console.log(subjectsData, teachersData, roomsData)
     // Sample data for dropdowns (these will be replaced by API data)
@@ -36,6 +45,14 @@ const ScheduleMaker = ({closeScheduleMaker, selectedClass}) => {
         { start: '15:00', end: '16:00' },
         { start: '16:00', end: '17:00' }
     ];
+
+    useEffect(() => {
+        if (schedulesData) {
+            console.log(schedulesData)
+            setScheduleData(schedulesData);
+        }
+        console.log('No existing schedule found or error fetching schedule.');
+    }, [loadingSchedules]);
 
     // Handle dropdown change
     const handleDropdownChange = (day, slotIndex, field, value) => {
@@ -60,7 +77,7 @@ const ScheduleMaker = ({closeScheduleMaker, selectedClass}) => {
 
     // Render each time slot as a row in the table
     const renderTimeSlotRow = (timeSlot, index) => {
-        const dayData = scheduleData[activeDay][index] || {};
+        const dayData = scheduleData?.[activeDay]?.[index] || {};
 
         return (
             <tr key={index} className="hover:bg-gray-700">
@@ -113,14 +130,22 @@ const ScheduleMaker = ({closeScheduleMaker, selectedClass}) => {
         );
     };
 
-    const onSaveHandler = () =>{
-        console.log(combineScheduleEntries(scheduleData))
+    const onSaveHandler = async () => {
+        const processedSchedule = combineScheduleEntries(scheduleData)
+        try {
+            const response = await axios.post(`http://localhost:5000/api/class/${selectedClass?._id}/schedule`, {
+                processedSchedule,
+            });
+            alert(response.data.message);
+        } catch (error) {
+            console.error('Error saving schedule', error);
+        }
     }
 
     return (
         <div className="modal modal-open">
             <div className="modal-box w-full max-w-5xl">
-                <h2 className="text-2xl font-semibold mb-6 text-center">Schedule Maker {"( "+ selectedClass?.className +" )"}</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-center">Schedule Maker {"( " + selectedClass?.className + " )"}</h2>
 
                 {/* Day Tabs */}
                 <div className="flex justify-center mb-8 space-x-4">
