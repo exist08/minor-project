@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import useAxios from 'axios-hooks';
 
-const AnnouncementsList = () => {
+const AnnouncementsList = ({ refresh }) => {
     const [{ data, loading, error }, fetchAnnouncements] = useAxios(
         {
             url: 'http://localhost:5000/api/announcements',
@@ -13,7 +13,7 @@ const AnnouncementsList = () => {
 
     useEffect(() => {
         fetchAnnouncements();
-    }, [fetchAnnouncements]);
+    }, [fetchAnnouncements,refresh]);
 
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="alert alert-error">Error fetching announcements</div>;

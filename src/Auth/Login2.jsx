@@ -38,6 +38,10 @@ const Login2 = ({ setIsAuthenticated, user , setUser }) => {
                 // Handle student-specific logic
                 localStorage.setItem('role', 'student')
                 setUser(data);
+            }else if (data.role === 'admin') {
+                // Handle student-specific logic
+                localStorage.setItem('role', 'admin')
+                setUser(data);
             }
             localStorage.setItem('authToken', "tZiB1Iph7AIM4R6CxKyBvGzTVZXwsbUroGHOaLW44j3duYZaW4suqThIyvjDJTPp")
             localStorage.setItem('userId',data?._id)
@@ -61,7 +65,7 @@ const Login2 = ({ setIsAuthenticated, user , setUser }) => {
                 <div className="sgs-logo">
                     <img src={sgslogo} alt="" />
                 </div>
-                <h2>Student Login</h2>
+                <h2>Login</h2>
                 <div className="email">
                     <label htmlFor="email">Username</label>
                     <div className="sec-2"><input
@@ -86,9 +90,9 @@ const Login2 = ({ setIsAuthenticated, user , setUser }) => {
                     </div>
                 </div>
                 <button onClick={handleLogin} disabled={loading} className="login">{loading ? 'Logging in...' : 'Login'} </button>
-                <div className="footer">
+                {/* <div className="footer">
                     <p><span>Don't have an account? | </span><Link to={'/signup'} style={{ display: 'inline' }}>Sign Up</Link>   </p>
-                </div>
+                </div> */}
             </div>
             {showToast && (
                 <Toast

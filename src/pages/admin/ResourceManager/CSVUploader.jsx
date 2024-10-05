@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Papa from 'papaparse';
 import axios from 'axios';
 
-function CSVUploader({ closeModal, selectedTab }) {
+function CSVUploader({ closeModal, selectedTab, setReftechCallback }) {
     const [csvFile, setCsvFile] = useState(null);
     const [error, setError] = useState('');
 
@@ -49,6 +49,7 @@ function CSVUploader({ closeModal, selectedTab }) {
                 const data = result.data;
                 axios.post(`http://localhost:5000/api/${selectedTab.toLowerCase()}/bulk`, data)
                     .then(() => {
+                        setReftechCallback(prev=>prev+1)
                         closeModal(); // Close modal on successful upload
                     })
                     .catch((err) => {

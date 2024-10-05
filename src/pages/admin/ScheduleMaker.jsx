@@ -46,13 +46,17 @@ const ScheduleMaker = ({ closeScheduleMaker = () => { }, selectedClass = {} }) =
         { start: '16:00', end: '17:00' }
     ];
 
-    useEffect(() => {
-        if (schedulesData) {
-            console.log(schedulesData)
-            setScheduleData(schedulesData);
+     // Update the schedule when API data is loaded
+     useEffect(() => {
+        if (schedulesData && schedulesData) {
+            setScheduleData((prevData) => ({
+                ...prevData,
+                ...schedulesData, // Override the days that have data
+            }));
+        } else {
+            console.log('No existing schedule found or error fetching schedule.');
         }
-        console.log('No existing schedule found or error fetching schedule.');
-    }, [loadingSchedules]);
+    }, [schedulesData]);
 
     // Handle dropdown change
     const handleDropdownChange = (day, slotIndex, field, value) => {
@@ -82,7 +86,7 @@ const ScheduleMaker = ({ closeScheduleMaker = () => { }, selectedClass = {} }) =
         return (
             <tr key={index} className="hover:bg-gray-700">
                 <td className="py-2 px-4 text-center">
-                    {timeSlot.start} - {timeSlot.end}
+                    {timeSlot?.start} - {timeSlot?.end}
                 </td>
                 <td className="py-2 px-4">
                     <select
@@ -132,6 +136,7 @@ const ScheduleMaker = ({ closeScheduleMaker = () => { }, selectedClass = {} }) =
 
     const onSaveHandler = async () => {
         const processedSchedule = combineScheduleEntries(scheduleData)
+        console.log(processedSchedule)
         try {
             const response = await axios.post(`http://localhost:5000/api/class/${selectedClass?._id}/schedule`, {
                 processedSchedule,

@@ -17,13 +17,17 @@ import { useState, useEffect } from 'react';
 import ResourceManager from './pages/admin/ResourceManager/ResourceManager';
 import Announcements from './pages/admin/Announcements/Announcements';
 import AccountsManager from './pages/admin/AccountManager/AccountsManager';
+import useToast from './Utils/UseToast';
+import UploadGrades from './pages/teachers/UploadGrades';
+import UploadStudyMaterial from './pages/teachers/UploadStudyMaterial';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState('student'); // Role: 'student', 'teacher', 'admin'
+  const [role, setRole] = useState(localStorage.getItem('role')); // Role: 'student', 'teacher', 'admin'
   const [user, setUser] = useState({})
-  const [userId, setUserId] = useState('')
-  const [classId, setClassId] = useState('')
+  const [userId, setUserId] = useState(localStorage.getItem('userId'))
+  const [classId, setClassId] = useState(localStorage.getItem('classId'))
+  const { addToast, ToastContainer } = useToast();
 
   // Simulate fetching authentication status and role from local storage or API
   useEffect(() => {
@@ -32,7 +36,7 @@ function App() {
     setRole(localStorage.getItem('role')); // set the role of the logged-in user
     setClassId(localStorage.getItem('classId'));
     setUserId(localStorage.getItem('userId'));
-  }, []);
+  }, [isAuthenticated]);
 
   // Handle logout
   const handleLogout = () => {
@@ -55,7 +59,7 @@ function App() {
           element={isAuthenticated ? <Navigate to="/" /> : <Login2 setIsAuthenticated={setIsAuthenticated} user={user} setUser={setUser} />}
         />
         <Route
-          path="/signup"
+          path="/signupppppp"
           element={isAuthenticated ? <Navigate to="/" /> : <SignUp2 />}
         />
 
@@ -82,10 +86,10 @@ function App() {
                     )}
                     {role === 'teacher' && (
                       <>
-                        {/*   <Route path="/upload-grades" element={<UploadGrades />} /> */}
-                        {/*  <Route path="/upload-study-material" element={<UploadStudyMaterial />} /> */}
+                        <Route path="/upload-grades" element={<UploadGrades />} />
+                        <Route path="/upload-study-material" element={<UploadStudyMaterial />} />
                         <Route path="/announcements" element={<Announcements role={role} />} />
-                        {/*  <Route path="/assignments" element={<Assignments />} /> */}
+                        <Route path="/assignments" element={<Assignments />} />
                       </>
                     )}
                     {role === 'admin' && (
@@ -99,6 +103,7 @@ function App() {
                   </Routes>
                 </Mainbar>
               </div>
+              <ToastContainer />
             </PrivateRoute>
           }
         />

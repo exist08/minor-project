@@ -2,28 +2,56 @@ import useAxios from 'axios-hooks';
 import React, { useState } from 'react'
 import AccountsCsvUploader from './AccountsCsvUploader';
 
-function TeachersAcc() {
+function TeachersAcc({ addToast = () => {}}) {
+  const [selectedId, setSelectedId] = useState('')
   const [showModal, setShowModal] = useState(false);
   const [showCSVModal, setShowCSVModal] = useState(false);
   const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const selectedTab = "Teachers";
   const [form, setForm] = useState({
     username: '',
     password: '',
     role: 'teacher',
   });
   
-  const [searchTerm, setSearchTerm] = useState('');
 
   // Fetch classes
   const [{ data: users = [], loading: fetchingUsers, error: fetchError }, refetchUsers] = useAxios(
     'http://localhost:5000/api/users/teachers',
     { manual: true }
   );
+  
+  // Remove the URL from the initial useAxios configuration
+  const [{ loading: deletingRes, error: deleteError }, executeDeleteRes] = useAxios(
+    { method: 'DELETE' },
+    { manual: true }
+  );
 
   
-    // Fetch classes on component mount
-    React.useEffect(() => {
+  const handleOnDelete = async (e, id) => {
+    e.preventDefault();
+    setSelectedId(id); // Keep this if you need it for UI purposes
+
+    try {
+      // Construct the URL here, when we know the ID for sure
+      const deleteUrl = `http://localhost:5000/api/users/teachers/${id}`;
+
+      await executeDeleteRes({
+        url: deleteUrl
+      });
+      addToast(`Teacher deleted successfully`);
       refetchUsers();
+    } catch (error) {
+      console.error(`There was an error deleting the ${selectedTab}!`, error);
+      addToast(`Deletion Failed: ${error.message}`,'error');
+    }
+  };
+
+
+  // Fetch classes on component mount
+  React.useEffect(() => {
+    refetchUsers();
   }, [refetchUsers]);
 
   // Create new user
@@ -32,7 +60,6 @@ function TeachersAcc() {
     { manual: true }
   );
 
-  const selectedTab = "Teachers";
 
   const filteredData = users.filter(item => {
     return Object.values(item).some(val =>
@@ -44,7 +71,7 @@ function TeachersAcc() {
     e.preventDefault();
     executeCreateUser({ data: form })
       .then(() => {
-        alert('Teacher added successfully');
+        addToast('Teacher added successfully','success');
         setShowModal(false); // Close modal after class is created
         refetchUsers(); // Fetch updated class list after creation
       })
@@ -95,13 +122,15 @@ function TeachersAcc() {
           </thead>
           <tbody>
             {filteredData.map((item) => (
-              <tr key={item._id}>
+              <tr key={item._id} className="hover:border-2 hover:border-red-500 mx-2 relative transition-colors duration-300">
                 {selectedTab === 'Teachers' && (
                   <>
                     <td>{item.username}</td>
                     <td>{item?.teacherDetails?.facultyName}</td>
                   </>
                 )}
+                <i onClick={(e) => handleOnDelete(e, item._id)} className="h-full w-10 flex justify-center items-center absolute right-0 text-xl transition-colors cursor-pointer hover:text-red-600"><ion-icon name="trash-outline"></ion-icon>
+                </i>
               </tr>
             ))}
           </tbody>

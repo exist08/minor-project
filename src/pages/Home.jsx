@@ -9,7 +9,7 @@ function Home({ userRole }) {
   
   return (
     <section className='section p-8'>
-      <h2>{roleMessages[userRole]}</h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-slate-200">{roleMessages[userRole]}</h2>
     </section>
   )
 }

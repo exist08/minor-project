@@ -2,23 +2,52 @@ import useAxios from 'axios-hooks';
 import React, { useState } from 'react'
 import AccountsCsvUploader from './AccountsCsvUploader';
 
-function StudentsAcc() {
+function StudentsAcc({  addToast = () => {} }) {
+  const [selectedId, setSelectedId] = useState('')
   const [showModal, setShowModal] = useState(false);
   const [showCSVModal, setShowCSVModal] = useState(false);
   const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const selectedTab = "Students";
   const [form, setForm] = useState({
     username: '',
     password: '',
     role: 'student',
   });
 
-  const [searchTerm, setSearchTerm] = useState('');
 
   // Fetch classes
   const [{ data: users = [], loading: fetchingUsers, error: fetchError }, refetchUsers] = useAxios(
     'http://localhost:5000/api/users/students',
     { manual: true }
   );
+
+
+  // Remove the URL from the initial useAxios configuration
+  const [{ loading: deletingRes, error: deleteError }, executeDeleteRes] = useAxios(
+    { method: 'DELETE' },
+    { manual: true }
+  );
+
+
+
+  const handleOnDelete = async (e, id) => {
+    e.preventDefault();
+    setSelectedId(id); // Keep this if you need it for UI purposes
+
+    try {
+      // Construct the URL here, when we know the ID for sure
+      const deleteUrl = `http://localhost:5000/api/users/students/${id}`;
+
+      await executeDeleteRes({
+        url: deleteUrl
+      });
+      addToast(`Student deleted successfully`);
+      refetchUsers();
+    } catch (error) {
+      console.error(`There was an error deleting the ${selectedTab}!`, error);
+    }
+  };
 
 
   // Fetch classes on component mount
@@ -32,7 +61,6 @@ function StudentsAcc() {
     { manual: true }
   );
 
-  const selectedTab = "Students";
 
   // Filter students by searchTerm
   const filteredData = users.filter(item => {
@@ -51,7 +79,7 @@ function StudentsAcc() {
     e.preventDefault();
     executeCreateUser({ data: form })
       .then(() => {
-        alert('Student added successfully');
+        addToast('Student added successfully');
         setShowModal(false); // Close modal after class is created
         refetchUsers(); // Fetch updated class list after creation
       })
@@ -103,13 +131,15 @@ function StudentsAcc() {
           </thead>
           <tbody>
             {filteredData.map((item) => (
-              <tr key={item._id}>
+              <tr key={item._id} className="hover:border-2 hover:border-red-500 mx-2 relative transition-colors duration-300">
                 {selectedTab === 'Students' && (
                   <>
                     <td>{item.username}</td>
                     <td>{item.studentDetails?.name}</td>
                   </>
                 )}
+                <i onClick={(e) => handleOnDelete(e, item._id)} className="h-full w-10 flex justify-center items-center absolute right-0 text-xl transition-colors cursor-pointer hover:text-red-600"><ion-icon name="trash-outline"></ion-icon>
+                </i>
               </tr>
             ))}
           </tbody>

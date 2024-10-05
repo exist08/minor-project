@@ -1,7 +1,7 @@
 import useAxios from 'axios-hooks';
 import React from 'react'
 
-function SingleResourceUploader({ closeModal = () => { }, selectedTab }) {
+function SingleResourceUploader({ closeModal = () => { }, selectedTab, setReftechCallback, addToast = () => { } }) {
     const formSampler = {
         Teachers: [
             { facultyName: '', facultyAbbreviation: '', username: '' }
@@ -49,7 +49,8 @@ function SingleResourceUploader({ closeModal = () => { }, selectedTab }) {
             // Make the API call dynamically based on selectedTab
             await executeCreateResource({ data: formData });
 
-            alert(`${selectedTab} added successfully`);
+            setReftechCallback(prev=>prev+1)
+            addToast(`${selectedTab} added successfully`)
             closeModal(); // Close the modal after creation
         } catch (error) {
             console.error(`Error adding ${selectedTab}:`, error);
@@ -61,7 +62,7 @@ function SingleResourceUploader({ closeModal = () => { }, selectedTab }) {
     return (
         <div className="modal modal-open">
             <div className="modal-box">
-                <h3 className="font-bold text-lg">Add New Student</h3>
+                <h3 className="font-bold text-lg">Add New {selectedTab}</h3>
                 <form onSubmit={handleSubmit}>
                     {formData.map((item, index) => (
                         Object.keys(item).map((key) => (

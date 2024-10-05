@@ -1,20 +1,23 @@
 import useAxios from 'axios-hooks';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ListRenderer from './ListRenderer'; // Importing the ListRenderer component
 import './resources.css'
 import CSVUploader from './CSVUploader';
 import SingleResourceUploader from './SingleResourceUploader';
+import useToast from '../../../Utils/UseToast';
 
 function ResourceManager() {
     const [selectedTab, setSelectedTab] = useState('Teachers');
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [showCSVModal, setShowCSVModal] = useState(false);
+    const [reftechCallback, setReftechCallback] = useState(0);
+    const {addToast,ToastContainer} = useToast()
 
     // API calls using axios-hooks
-    const [{ data: teachersData, loading: teachersLoading, error: teachersError }] = useAxios('http://localhost:5000/api/teachers');
-    const [{ data: subjectsData, loading: subjectsLoading, error: subjectsError }] = useAxios('http://localhost:5000/api/subjects');
-    const [{ data: roomsData, loading: roomsLoading, error: roomsError }] = useAxios('http://localhost:5000/api/rooms');
+    const [{ data: teachersData, loading: teachersLoading, error: teachersError },refetchTeachers] = useAxios('http://localhost:5000/api/teachers');
+    const [{ data: subjectsData, loading: subjectsLoading, error: subjectsError },refetchSubjects] = useAxios('http://localhost:5000/api/subjects');
+    const [{ data: roomsData, loading: roomsLoading, error: roomsError },refetchRooms] = useAxios('http://localhost:5000/api/rooms');
 
     const resources = {
         Teachers: teachersData || [],
@@ -25,6 +28,13 @@ function ResourceManager() {
     const loading = teachersLoading || subjectsLoading || roomsLoading;
     const error = teachersError || subjectsError || roomsError;
 
+    
+    useEffect(()=>{
+        refetchRooms();
+        refetchTeachers();
+        refetchSubjects();
+    },[reftechCallback])
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error fetching data: {error.message}</p>;
 
@@ -34,6 +44,7 @@ function ResourceManager() {
             val.toString().toLowerCase().includes(searchTerm.toLowerCase())
         );
     });
+
 
     return (
         <section className='p-8'>
@@ -73,15 +84,16 @@ function ResourceManager() {
                 </div>
 
                 {/* List Renderer Component */}
-                <ListRenderer selectedTab={selectedTab} filteredData={filteredData} />
+                <ListRenderer selectedTab={selectedTab} filteredData={filteredData} setReftechCallback={setReftechCallback} addToast={addToast}/>
 
                 {showCSVModal && (
-                    <CSVUploader closeModal={() => setShowCSVModal(false)} selectedTab={selectedTab} />
+                    <CSVUploader closeModal={() => setShowCSVModal(false)} selectedTab={selectedTab} setReftechCallback={setReftechCallback} />
                 )}
 
                 {showModal && (
-                    <SingleResourceUploader closeModal={() => setShowModal(false)} selectedTab={selectedTab} />
+                    <SingleResourceUploader closeModal={() => setShowModal(false)} selectedTab={selectedTab} setReftechCallback={setReftechCallback} addToast={addToast} />
                 )}
+                <ToastContainer />
             </div>
         </section>
     );

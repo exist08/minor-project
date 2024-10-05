@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import useAxios from 'axios-hooks';
 
-const AddAnnouncement = () => {
+const AddAnnouncement = ({ onAdd = ()=>{} }) => {
     const [text, setText] = useState('');
     const [postedBy, setPostedBy] = useState('');
     const [expiresAt, setExpiresAt] = useState('');
@@ -23,6 +23,8 @@ const AddAnnouncement = () => {
         setPostedBy('');
         setExpiresAt('');
         setIsOpen(false); // Close modal after submission
+        // Fetch updated announcements after creation
+        onAdd();
     };
 
     return (
