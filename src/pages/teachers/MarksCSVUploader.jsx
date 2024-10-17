@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import axios from 'axios';
-import useToast from '../../../Utils/UseToast';
 
-function StudentsCSVUploader({ closeStudent = ()=>{}, selectedTab = '', selectedClass = {} }) {
+function MarksCSVUploader({ closeModal = () => { }, selectedSubject = {}, selectedClass = {} }) {
     const [csvFile, setCsvFile] = useState(null);
     const [error, setError] = useState('');
-    const { addToast, ToastContainer } = useToast();
 
-    // Sample CSV format data for each tab
-    const csvSamples = {
-        Student: [
-            { enrollmentNumber: '0801xx231xxx', name: 'Kapil Sharma', classId: selectedClass?._id }
-        ],
-    };
+    // Sample CSV format data
+    const csvSample = [
+        { enrollmentNumber: '0801xx231xxx', name: 'Kapil Sharma', marks: 18, maxMarks: 20 }
+    ];
 
     // Function to download the sample CSV
     const downloadSampleCSV = () => {
-        const sampleData = csvSamples[selectedTab];
-        const csv = Papa.unparse(sampleData); // Convert JSON to CSV format
+        const csv = Papa.unparse(csvSample); // Convert JSON to CSV format
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `${selectedTab}-sample.csv`);
+        link.setAttribute('download', `marks-sample.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -42,12 +37,23 @@ function StudentsCSVUploader({ closeStudent = ()=>{}, selectedTab = '', selected
         Papa.parse(csvFile, {
             header: true,
             complete: (result) => {
-                const data = result.data;
-                axios.post(`http://localhost:5000/api/bulk-add-students`, data)
+                console.log(result)
+                // Filter out rows that are incomplete or have empty fields
+                const data = result.data.filter(obj =>
+                    Object.values(obj).every(value =>
+                        value !== "" && value !== null && value !== undefined
+                    )
+                );
+
+                if (data.length === 0) {
+                    setError('No valid data found in the CSV file');
+                    return;
+                }
+
+                // Upload valid data to the backend
+                axios.post(`http://localhost:5000/api/upload-marks`, data)
                     .then(() => {
-                        alert('Students added successfully!');
-                        closeStudent(); // Close modal on successful upload
-                        
+                        closeModal(); // Close modal on successful upload
                     })
                     .catch((err) => {
                         setError('Error uploading CSV: ' + err.message);
@@ -59,14 +65,15 @@ function StudentsCSVUploader({ closeStudent = ()=>{}, selectedTab = '', selected
         });
     };
 
+
     return (
         <div className="modal modal-open">
             <div className="modal-box">
-                <h3 className="text-lg mb-2">Upload CSV for {selectedTab}</h3>
-                
+                <h3 className="text-lg mb-2">Upload Marks for {selectedSubject.subjectName}</h3>
+
                 {/* Download CSV sample */}
                 <button onClick={downloadSampleCSV} className="btn btn-info">
-                    Download {selectedTab} CSV Format
+                    Download Marks CSV Format
                 </button>
 
                 {/* CSV File Input */}
@@ -77,14 +84,13 @@ function StudentsCSVUploader({ closeStudent = ()=>{}, selectedTab = '', selected
                     <button onClick={handleUpload} className="btn btn-accent">
                         Upload
                     </button>
-                    <button onClick={closeStudent} className="btn btn-neutral">
+                    <button onClick={closeModal} className="btn btn-neutral">
                         Cancel
                     </button>
                 </div>
             </div>
-            <ToastContainer />
         </div>
     );
 }
 
-export default StudentsCSVUploader;
+export default MarksCSVUploader;

@@ -28,7 +28,7 @@ aside > ul > li:hover{
     background: #21354770;
     box-shadow: 0 0 50px 0px #213547;
     cursor: pointer;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 @media screen and (max-width: 1080px) {
     aside > ul > li:hover{

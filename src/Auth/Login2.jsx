@@ -3,13 +3,12 @@ import sgslogo from '../assets/3_sgsits_logo.png'
 import React, { useState, useEffect } from 'react';
 import useAxios from 'axios-hooks';
 import { Link, useNavigate } from 'react-router-dom';
+import useToast from '../Utils/UseToast';
 
 const Login2 = ({ setIsAuthenticated, user , setUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [toastMessage, setToastMessage] = useState('');
-    const [toastType, setToastType] = useState(''); // To manage toast type
-    const [showToast, setShowToast] = useState(false); // To manage toast visibility
+    const { addToast, ToastContainer } = useToast();
     const navigate = useNavigate()
     const [{ data, loading, error }, loginCall] = useAxios(
         {
@@ -46,18 +45,15 @@ const Login2 = ({ setIsAuthenticated, user , setUser }) => {
             localStorage.setItem('authToken', "tZiB1Iph7AIM4R6CxKyBvGzTVZXwsbUroGHOaLW44j3duYZaW4suqThIyvjDJTPp")
             localStorage.setItem('userId',data?._id)
             localStorage.setItem('classId',data?.classId)
+            localStorage.setItem('user',JSON.stringify(data))
             setIsAuthenticated(true); // Set the authenticated state to true when the login is successful
             navigate('/')
-            setToastType('success');
-            setShowToast(true);
             // You can redirect the user or store the session here
         } else if (error) {
             console.log(error)
-            setToastMessage('Login failed, please try again.');
-            setToastType('error');
-            setShowToast(true);
+            addToast("Invalid Username or password",'error');
         }
-    }, [data]);
+    }, [data || error]);
 
     return (
         <div className="login-container">
@@ -94,14 +90,8 @@ const Login2 = ({ setIsAuthenticated, user , setUser }) => {
                     <p><span>Don't have an account? | </span><Link to={'/signup'} style={{ display: 'inline' }}>Sign Up</Link>   </p>
                 </div> */}
             </div>
-            {showToast && (
-                <Toast
-                    message={toastMessage}
-                    type={toastType}
-                    duration={2000}
-                    onClose={() => setShowToast(false)}  // Hide the toast after it closes
-                />
-            )}
+            
+            <ToastContainer />
         </div>
     )
 }

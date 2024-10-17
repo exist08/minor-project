@@ -323,8 +323,8 @@ function Schedule({ userId = '', classId='' }) {
   ).sort((a, b) => a.localeCompare(b));
 
   const getRowSpan = (subject) => {
-    const startHour = parseInt(subject.start.split(':')[0], 10);
-    const endHour = parseInt(subject.end.split(':')[0], 10);
+    const startHour = parseInt(subject?.start?.split(':')[0], 10);
+    const endHour = parseInt(subject?.end?.split(':')[0], 10);
     return endHour - startHour;
   };
 

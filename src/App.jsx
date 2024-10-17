@@ -18,8 +18,10 @@ import ResourceManager from './pages/admin/ResourceManager/ResourceManager';
 import Announcements from './pages/admin/Announcements/Announcements';
 import AccountsManager from './pages/admin/AccountManager/AccountsManager';
 import useToast from './Utils/UseToast';
-import UploadGrades from './pages/teachers/UploadGrades';
+// import UploadGrades from './pages/teachers/UploadGrades';
 import UploadStudyMaterial from './pages/teachers/UploadStudyMaterial';
+import MarksUpload from './pages/teachers/MarksUpload';
+import UploadPermissions from './pages/admin/UploadPermissions/UploadPermissions';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,6 +38,8 @@ function App() {
     setRole(localStorage.getItem('role')); // set the role of the logged-in user
     setClassId(localStorage.getItem('classId'));
     setUserId(localStorage.getItem('userId'));
+    setUser(JSON.parse(localStorage.getItem('user')));
+    addToast("Logged In Sucessfully",'success');
   }, [isAuthenticated]);
 
   // Handle logout
@@ -86,8 +90,8 @@ function App() {
                     )}
                     {role === 'teacher' && (
                       <>
-                        <Route path="/upload-grades" element={<UploadGrades />} />
-                        <Route path="/upload-study-material" element={<UploadStudyMaterial />} />
+                        <Route path="/upload-grades" element={<MarksUpload user={user} />} />
+                        <Route path="/upload-study-material" element={<UploadStudyMaterial user={user}/>} />
                         <Route path="/announcements" element={<Announcements role={role} />} />
                         <Route path="/assignments" element={<Assignments />} />
                       </>
@@ -98,6 +102,7 @@ function App() {
                         <Route path="/resource-manager" element={<ResourceManager />} />
                         <Route path="/announcements" element={<Announcements role={role} />} />
                         <Route path="/accounts-manager" element={<AccountsManager />} />
+                        <Route path='/upload-permissions' element={<UploadPermissions />} />
                       </>
                     )}
                   </Routes>

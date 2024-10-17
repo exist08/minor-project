@@ -8,10 +8,10 @@ const combineScheduleEntries = (schedule) => {
         schedule[day].forEach((currentItem) => {
             if (
                 prevItem &&
-                prevItem.subject === currentItem.subject &&
-                prevItem.teacher === currentItem.teacher &&
-                prevItem.room === currentItem.room &&
-                prevItem.end === currentItem.start // Consecutive times
+                prevItem?.subject === currentItem?.subject &&
+                prevItem?.teacher === currentItem?.teacher &&
+                prevItem?.room === currentItem?.room &&
+                prevItem?.end === currentItem?.start // Consecutive times
             ) {
                 // Extend the previous item's time
                 prevItem.end = currentItem.end;

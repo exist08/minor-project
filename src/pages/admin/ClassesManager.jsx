@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import useAxios from 'axios-hooks';
 import './admin.css';
 import ScheduleMaker from './ScheduleMaker';
-import ClassManager from './ClassManager/ClassManager';
+// import ClassManager from './ClassManager/ClassManager';
 import StudentsCSVUploader from './ClassManager/StudentsCSVUploader';
 import StudentListModal from './ClassManager/StudentListModal';
+import AssignTeacherToClass from './ClassManager/AssignTeacherToClass';
+import AssignSubjectsToClass from './ClassManager/AssignSubjectsToClass';
 
 function ClassesManager() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +14,8 @@ function ClassesManager() {
     const [selectedClass, setSelectedClass] = useState(null);
     const [studentModal, setStudentModal] = useState(false)
     const [studentListModal, setStudentListModal] = useState(false)
+    const [assignTeacherModal, setAssignTeacherModal] = useState(false)
+    const [addSubjectsModal, setAddSubjectsModal] = useState(false)
     const [message, setMessage] = useState('');
     const [form, setForm] = useState({
         className: '',
@@ -87,6 +91,16 @@ function ClassesManager() {
         setStudentModal(true);      // Open the StudentsCSVUploader modal
     }
 
+    const handleAssignTeachers = (classItem) => {
+        setSelectedClass(classItem); // Set the selected class
+        setAssignTeacherModal(true); // Open the
+    }
+
+    const handleAddSubjects = (classItem) => {
+        setSelectedClass(classItem); // Set the selected class
+        setAddSubjectsModal(true); // Open the
+    }
+
     // handleDelete now accepts the class object and uses its id to delete
     const handleDelete = async (classItem) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete the class "${classItem.className}"?`);
@@ -135,6 +149,16 @@ function ClassesManager() {
                                             <li>
                                                 <a onClick={() => handleShowStudents(classItem)}>
                                                     Students List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onClick={() => handleAssignTeachers(classItem)}>
+                                                    Assign Teachers
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a onClick={() => handleAddSubjects(classItem)}>
+                                                    Add Subjects
                                                 </a>
                                             </li>
                                             <li>
@@ -216,8 +240,15 @@ function ClassesManager() {
 
             {studentListModal && <StudentListModal closeStudentList={() => setStudentListModal(false)} classId={selectedClass?._id} /> }
             {/* {selectedClass && (
-                <ClassManager selectedClass={selectedClass} /> // Render ClassManager with selected class
+                <ClassManager selectedClass={selectedClass} /> // Render ClassManage
+                r with selected class
             )} */}
+            {
+                assignTeacherModal && <AssignTeacherToClass selectedClass={selectedClass} closeModal={()=>setAssignTeacherModal(false)} />
+            }
+            {
+                addSubjectsModal && <AssignSubjectsToClass selectedClass={selectedClass} closeModal={()=>setAddSubjectsModal(false)}  />
+            }
         </section>
     );
 }
