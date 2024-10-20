@@ -3,8 +3,6 @@ import useAxios from 'axios-hooks';
 import MarksUploadSpecificClass from './MarksUploadSpecificClass';
 
 const MarksUpload = ({ user = {} }) => {
-    console.log(user)
-
     const [selectedClass, setSelectedClass] = useState(null);
     const [classSubjectsModal, setClassSubjectsModal] = useState(false)
 

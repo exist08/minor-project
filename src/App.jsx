@@ -22,6 +22,7 @@ import useToast from './Utils/UseToast';
 import UploadStudyMaterial from './pages/teachers/UploadStudyMaterial';
 import MarksUpload from './pages/teachers/MarksUpload';
 import UploadPermissions from './pages/admin/UploadPermissions/UploadPermissions';
+import AssignmentUpload from './pages/teachers/AssignmentUpload';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -81,10 +82,10 @@ function App() {
                     {/* Role-Based Routes */}
                     {role === 'student' && (
                       <>
-                        <Route path="/my-grades" element={<MyGrades />} />
+                        <Route path="/my-grades" element={<MyGrades user={user} />} />
                         <Route path="/class-schedule" element={<Schedule userId={userId} classId={classId} />} />
-                        <Route path="/study-material" element={<StudyMaterial />} />
-                        <Route path="/assignments" element={<Assignments />} />
+                        <Route path="/study-material" element={<StudyMaterial />}  classId={classId}/>
+                        <Route path="/assignments" element={<Assignments user={user}  classId={classId}/>} />
                         <Route path="/announcements" element={<Announcements role={role} />} />
                       </>
                     )}
@@ -93,7 +94,7 @@ function App() {
                         <Route path="/upload-grades" element={<MarksUpload user={user} />} />
                         <Route path="/upload-study-material" element={<UploadStudyMaterial user={user}/>} />
                         <Route path="/announcements" element={<Announcements role={role} />} />
-                        <Route path="/assignments" element={<Assignments />} />
+                        <Route path="/assignments" element={<AssignmentUpload user={user} />} />
                       </>
                     )}
                     {role === 'admin' && (

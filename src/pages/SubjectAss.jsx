@@ -1,57 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAxios from 'axios-hooks';
-import useToast from '../../Utils/UseToast';
-import MaterialUploadModal from './MaterialUploadModal';
+import useToast from '../Utils/UseToast';
+import AssignmentUploadModal from './teachers/AssignmentUploadModal';
 
-const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { } }) => {
+const SubjectAss = ({ selectedClass = {}, user = {}, onClose = () => { } }) => {
     const [classSubjects, setClassSubjects] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState(null);
-    const [materialUploadModal, setMaterialUploadModal] = useState(false);
-    const [materials, setMaterials] = useState({});  // Store materials by subject ID
+    const [assignments, setAssignments] = useState({});
+    const [assignmentUploadModal, setAssignmentUploadModal] = useState(false);
     const { addToast, ToastContainer } = useToast();
 
-    // Existing permissions fetch
+    // Fetch permissions for the selected class and teacher
     const [{ data: permissionsList, loading: permissionsLoading, error: permissionsError }, refetchPermissions] = useAxios(
         `http://localhost:5000/api/permissions?classId=${selectedClass?._id}&teacherId=${user._id}`,
         { manual: true }
     );
 
-    // Fetch materials for a specific subject
-    const fetchMaterialsForSubject = async (subjectId) => {
+    // Fetch assignments for a specific subject
+    const fetchAssignmentsForSubject = async (subjectId) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/materials`, {
+            const response = await axios.get(`http://localhost:5000/api/assignments`, {
                 params: {
                     classId: selectedClass._id,
                     teacherId: user._id,
                     subjectId: subjectId
                 }
             });
-            setMaterials(prev => ({
+            setAssignments(prev => ({
                 ...prev,
                 [subjectId]: response.data
             }));
         } catch (error) {
-            console.error("Error fetching materials:", error);
-            addToast("Error fetching materials: " + error.message, 'error');
+            console.error("Error fetching assignments:", error);
+            addToast("Error fetching assignments: " + error.message, 'error');
         }
     };
 
-    // Existing subjects fetch effect
+
+    // Handle assignment deletion
+    const handleDeleteAssignment = async (assignmentId, subjectId) => {
+        try {
+            await axios.delete(`http://localhost:5000/api/assignments/${assignmentId}`);
+            addToast("Assignment deleted successfully", 'success');
+            // Refresh assignments for this subject
+            fetchAssignmentsForSubject(subjectId);
+        } catch (error) {
+            console.error("Error deleting assignment:", error);
+            addToast("Error deleting assignment: " + error.message, 'error');
+        }
+    };
+
+    // Fetch subjects effect
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
                 if (selectedClass.subjects && selectedClass.subjects.length > 0) {
                     const response = await axios.get("http://localhost:5000/api/subjects");
                     const fetchedSubjects = response.data;
+
+                    // Filter subjects that belong to the selected class
                     const filteredSubjects = fetchedSubjects.filter(subject =>
                         selectedClass.subjects.includes(subject._id)
                     );
                     setClassSubjects(filteredSubjects);
-
-                    // Fetch materials for each subject
+                    
+                    // Fetch assignments for each subject
                     filteredSubjects.forEach(subject => {
-                        fetchMaterialsForSubject(subject._id);
+                        fetchAssignmentsForSubject(subject._id);
                     });
                 }
             } catch (error) {
@@ -65,19 +81,6 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
         }
     }, [selectedClass, refetchPermissions]);
 
-    // Handle material deletion
-    const handleDeleteMaterial = async (materialId, subjectId) => {
-        try {
-            await axios.delete(`http://localhost:5000/api/materials/${materialId}`);
-            addToast("Material deleted successfully", 'success');
-            // Refresh materials for this subject
-            fetchMaterialsForSubject(subjectId);
-        } catch (error) {
-            console.error("Error deleting material:", error);
-            addToast("Error deleting material: " + error.message, 'error');
-        }
-    };
-
     // Filter subjects based on permissions
     const filteredSubjects = classSubjects?.filter((subject) =>
         permissionsList?.some((permission) =>
@@ -90,13 +93,16 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
     return (
         <section className="p-8 w-5/6 ml-auto mr-10">
             <div className="modal-content flex flex-col h-full">
-                <h2 className='2xl:text-3xl xl:text-xl text-base font-semibold mb-6'>Subjects with Upload Permission</h2>
+                <h2 className='2xl:text-3xl xl:text-xl text-base font-semibold mb-6'>
+                    Create Assignments for Subjects
+                </h2>
+
                 {permissionsLoading ? (
                     <div>Loading...</div>
                 ) : permissionsError ? (
                     <div>Error loading permissions</div>
                 ) : classSubjects.length === 0 ? (
-                    <div>No subjects available for Study Material upload.</div>
+                    <div>No subjects available for creating assignments.</div>
                 ) : filteredSubjects?.length === 0 ? (
                     <div>No subjects available for this teacher.</div>
                 ) : (
@@ -107,28 +113,33 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
                                     <h1 className="font-bold text-xl">
                                         {subject.subjectName}
                                     </h1>
-                                    <button
+                                    <button 
                                         className="btn btn-outline btn-info"
                                         onClick={() => {
                                             setSelectedSubject(subject);
-                                            setMaterialUploadModal(true);
+                                            setAssignmentUploadModal(true);
                                         }}
                                     >
-                                        Upload Material
+                                        Create Assignment
                                     </button>
                                 </div>
 
-                                {/* Materials List */}
+                               {/* Assignments List */}
                                 <div className="mt-4">
-                                    <h3 className="text-lg font-semibold mb-2">Uploaded Materials:</h3>
-                                    {materials[subject._id]?.length > 0 ? (
+                                    <h3 className="text-lg font-semibold mb-2">Current Assignments:</h3>
+                                    {assignments[subject._id]?.length > 0 ? (
                                         <ul className="space-y-2">
-                                            {materials[subject._id].map((material) => (
-                                                <li key={material._id} className="flex items-center justify-between bg-gray-700 p-3 rounded">
-                                                    <span>{material.fileName}</span>
+                                            {assignments[subject._id].map((assignment) => (
+                                                <li key={assignment._id} className="flex items-center justify-between bg-gray-700 p-3 rounded">
+                                                    <div className="flex flex-col">
+                                                        <span className="font-semibold">{assignment.title}</span>
+                                                        <span className="text-sm text-gray-400">
+                                                            Due: {new Date(assignment.dueDate).toLocaleString()}
+                                                        </span>
+                                                    </div>
                                                     <div className="space-x-2">
                                                         <a
-                                                            href={`http://localhost:5000/${material.filePath}`}
+                                                            href={`http://localhost:5000/${assignment.filePath}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="btn btn-sm btn-primary"
@@ -136,7 +147,7 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
                                                             Download
                                                         </a>
                                                         <button
-                                                            onClick={() => handleDeleteMaterial(material._id, subject._id)}
+                                                            onClick={() => handleDeleteAssignment(assignment._id, subject._id)}
                                                             className="btn btn-sm btn-error"
                                                         >
                                                             Delete
@@ -146,7 +157,7 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
                                             ))}
                                         </ul>
                                     ) : (
-                                        <p className="text-gray-400">No materials uploaded yet.</p>
+                                        <p className="text-gray-400">No assignments created yet.</p>
                                     )}
                                 </div>
                             </div>
@@ -160,16 +171,15 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
                     </button>
                 </div>
             </div>
-
-            {materialUploadModal && (
-                <MaterialUploadModal
+            {assignmentUploadModal && (
+                <AssignmentUploadModal
                     selectedClass={selectedClass}
                     selectedSubject={selectedSubject}
                     onClose={() => {
-                        setMaterialUploadModal(false);
-                        // Refresh materials for the selected subject after upload
+                        setAssignmentUploadModal(false);
+                        // Refresh assignments for the selected subject after upload
                         if (selectedSubject) {
-                            fetchMaterialsForSubject(selectedSubject._id);
+                            fetchAssignmentsForSubject(selectedSubject._id);
                         }
                     }}
                     user={user}
@@ -181,4 +191,4 @@ const StudyMaterialUpload = ({ selectedClass = {}, user = {}, onClose = () => { 
     );
 };
 
-export default StudyMaterialUpload;
+export default SubjectAss;
