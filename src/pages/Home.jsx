@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Home({ userRole }) {
+function Home({ userRole= '', user = {} }) {
   const roleMessages = {
-    student: "Your learning journey continues here",
-    teacher: "Empower your teaching journey",
-    admin: "Manage your institution effectively"
+    student: `Welcome ${user?.name}, Your learning journey continues here`,
+    teacher: `Welcome ${user?.facultyName} , Empower your teaching journey`,
+    admin: `Welcome Admin !`
   };
   
   return (

@@ -6,10 +6,6 @@ import MyGrades from './pages/MyGrades';
 import Assignments from './pages/Assignments';
 import Schedule from './pages/Schedule';
 import StudyMaterial from './pages/StudyMaterial';
-// import Announcements from './pages/Announcements';
-// import UploadGrades from './pages/teacher/UploadGrades';
-// import UploadStudyMaterial from './pages/teacher/UploadStudyMaterial';
-// import StudentManagement from './pages/admin/StudentManagement';
 import ClassesManager from './pages/admin/ClassesManager';
 import Login2 from './Auth/Login2';
 import SignUp2 from './Auth/SignUp2';
@@ -18,7 +14,6 @@ import ResourceManager from './pages/admin/ResourceManager/ResourceManager';
 import Announcements from './pages/admin/Announcements/Announcements';
 import AccountsManager from './pages/admin/AccountManager/AccountsManager';
 import useToast from './Utils/UseToast';
-// import UploadGrades from './pages/teachers/UploadGrades';
 import UploadStudyMaterial from './pages/teachers/UploadStudyMaterial';
 import MarksUpload from './pages/teachers/MarksUpload';
 import UploadPermissions from './pages/admin/UploadPermissions/UploadPermissions';
@@ -77,7 +72,7 @@ function App() {
                 <Sidebar role={role} onLogout={handleLogout} />
                 <Mainbar>
                   <Routes>
-                    <Route path="/" element={<Home userRole={role} />} />
+                    <Route path="/" element={<Home userRole={role} user={user} />} />
                     {/* <Route path="/" element={<AccountsManager />} /> */}
                     {/* Role-Based Routes */}
                     {role === 'student' && (
